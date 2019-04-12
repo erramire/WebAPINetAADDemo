@@ -18,22 +18,7 @@ namespace BackEndApiDemo
         public void ConfigureAuth(IAppBuilder app)
         {
 
-            //app.UseJwtBearerAuthentication(
-
-            //    new Microsoft.Owin.Security.Jwt.JwtBearerAuthenticationOptions {
-            //    //AllowedAudiences= new string[] { ConfigurationManager.AppSettings["ida:Audience"] },
-            //    TokenHandler = Tokenhandler(),
-            //    TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidAudience = ConfigurationManager.AppSettings["ida:Audience"],
-            //        ValidIssuer= "https://sts.windows.net/52dd3814-4288-429d-8815-15feec88f8de/"
-
-
-
-            //    }
-
-            //});
-
+            
             app.UseWindowsAzureActiveDirectoryBearerAuthentication(
                 new WindowsAzureActiveDirectoryBearerAuthenticationOptions
                 {
@@ -46,21 +31,5 @@ namespace BackEndApiDemo
                 });
         }
 
-        private JwtSecurityTokenHandler Tokenhandler()
-        {
-            return new JwtSecurityTokenHandler();
-        }
-        //private Task AuthenticationFailed(AuthenticationFailedContext arg)
-        //{
-        //    // For debugging purposes only!
-        //    var s = $"AuthenticationFailed: {arg.Exception.Message}";
-        //    arg.Response.ContentLength = s.Length;
-        //    arg.Response.Body.Write(Encoding.UTF8.GetBytes(s), 0, s.Length);
-        //    return Task.FromResult(0);
-        //}
-        //private int funcione()
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
