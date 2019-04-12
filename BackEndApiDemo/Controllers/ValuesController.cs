@@ -1,19 +1,36 @@
-﻿using System;
+﻿using BackEndApiDemo.Business;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web.Configuration;
 using System.Web.Http;
 
 namespace BackEndApiDemo.Controllers
 {
     [Authorize]
+    
     public class ValuesController : ApiController
     {
         // GET api/values
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            string stringConnection = String.Empty;
+            if (ConfigurationManager.AppSettings["Mode"]== "Development")
+            {
+                stringConnection = ConfigurationManager.AppSettings["SQLConnectionString"].ToString();
+            }
+            else
+            {
+                stringConnection= WebConfigurationManager.ConnectionStrings["MyDbConnection"].ConnectionString;
+            }
+            
+            ValueBusiness valBus = new ValueBusiness(stringConnection);
+            string[] results = valBus.GetAllValues();
+            //return new string[] { "value1", "value2" };
+            return results;
         }
 
         // GET api/values/5
